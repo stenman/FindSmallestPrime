@@ -10,15 +10,21 @@ public class FindSmallestPrime {
 	static int lowest = 1337;
 	static int highest = 2014;
 
+	// This algorithm has not been optimized and is NOT to be trusted with numbers larger than a certain size
 	public static void main(String[] args) {
 
 		List<Long> primes = new ArrayList<Long>();
 
+		long startTime = System.nanoTime();
 		primes = provideNewVariation(9, lowest, highest);
 		primes.addAll(provideNewVariation(9, highest, lowest));
+		long endTime = System.nanoTime();
+		long duration = endTime - startTime;
+
 		primes.removeAll(Arrays.asList(Long.valueOf(0)));
 		Long smallestPrime = Collections.min(primes);
-		System.out.println("Smallest prime found: " + smallestPrime + "\nTotal numbers of primes found: " + primes.size() + "\nTotal time elapsed: ");
+		System.out.println("Smallest prime found: " + smallestPrime + "\nTotal numbers of primes found: " + primes.size() + "\nTotal time elapsed: "
+				+ duration / 1000000 + "ms");
 
 	}
 
@@ -49,21 +55,6 @@ public class FindSmallestPrime {
 	}
 
 	private static long isPrime(long n) {
-		if (n % 2 == 0) {
-			return 0;
-		}
-
-		final long limit = (long) Math.sqrt(n);
-
-		for (long i = 3; i <= limit; i += 2) {
-			if (n % i == 0) {
-				return 0;
-			}
-		}
-		return n;
-	}
-
-	private static long isPrimeWat(long n) {
 		if (n < 2)
 			return 0;
 		if (n == 2 || n == 3)
